@@ -14,6 +14,7 @@ FILES=(
   ".gitignore_global:$HOME/.gitignore_global"
   "vscode/settings.json:$APPDATA/Code/User/settings.json"
   "vscode/keybindings.json:$APPDATA/Code/User/keybindings.json"
+  "claude/settings.json:$HOME/.claude/settings.json"
 )
 
 cmd_diff() {
