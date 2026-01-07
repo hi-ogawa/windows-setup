@@ -10,6 +10,7 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
 - Boot and install
   - Boot from USB stick with Ventoy + Windows ISO
   - Launch installer via Ventoy (Normal mode)
+  - *Pick English (US) for language/keyboard - UK is hard to remove later*
 - Disk setup
   - Delete all partitions on target disk, leave as unallocated space
   - Let Windows auto-create partitions
