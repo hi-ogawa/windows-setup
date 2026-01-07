@@ -44,20 +44,39 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
     - Disable "find my mouse" (triggered by Ctrl double tap)
 - Install Chrome
   - Install, sign in, sync bookmarks and extensions
-- Setup basic development tools (see [notes/dev.md](./notes/dev.md) for background)
-  - install git (with bash), vscode via winget
-  - install scoop https://scoop.sh/
-  - follow [dotfiles/README.md](./dotfiles/README.md)
-
-Tool installtion via winget:
 
 ```powershell
 winget install -e --id Microsoft.PowerToys
 winget install -e --id Google.Chrome
 winget install -e --id Git.Git
 winget install -e --id Microsoft.VisualStudioCode
+```
+
+## Dev setup
+
+Continue the setup on Bash (from Git.Git)
+
+- Install scoop: https://scoop.sh
+
+- Install more tools:
+
+```bash
+winget install -e --id Anthropic.ClaudeCode
 scoop install yazi gh
 ```
+
+- Setup dotfiles
+  - see [dotfiles/README.md](./dotfiles/README.md)
+
+```sh
+mkdir -p ~/code/personal
+cd ~/code/personal
+git clone https://github.com/hi-ogawa/windows-setup
+```
+
+- Setup SSH and GitHub
+  - `ssh-keygen -t ed25519 -C <email>`
+  - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
 ## Desktop tips
 
