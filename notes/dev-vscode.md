@@ -11,7 +11,7 @@ Windows-specific VSCode configuration and best practices.
 
 ## Settings
 
-See **[dotfiles/vscode/settings.json](dotfiles/vscode/settings.json)** and **[dotfiles/vscode/keybindings.json](dotfiles/vscode/keybindings.json)**
+See **[dotfiles/vscode/settings.json](../dotfiles/vscode/settings.json)** and **[dotfiles/vscode/keybindings.json](../dotfiles/vscode/keybindings.json)**
 
 Key settings:
 - Force LF line endings for Git compatibility

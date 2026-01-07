@@ -44,7 +44,7 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
     - Disable "find my mouse" (triggered by Ctrl double tap)
 - Install Chrome
   - Install, sign in, sync bookmarks and extensions
-- Setup basic development tools (see [dev.md](./dev.md) for background)
+- Setup basic development tools (see [notes/dev.md](./notes/dev.md) for background)
   - install git (with bash), vscode via winget
   - install scoop https://scoop.sh/
   - follow [dotfiles/README.md](./dotfiles/README.md)
