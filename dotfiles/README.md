@@ -4,6 +4,7 @@ Configuration files for Windows development environment.
 
 ## Contents
 
+- `setup.sh` - Dotfiles manager script (diff/apply/save)
 - `.bash_profile` - Bash login shell config (sources `.bashrc`)
 - `.bashrc` - Bash configuration (yazi shell wrapper)
 - `.gitconfig` - Git configuration (aliases, LF line endings, defaults)
@@ -13,15 +14,13 @@ Configuration files for Windows development environment.
 ## Setup
 
 ```bash
-# Copy configs
-cp -f dotfiles/.bash_profile ~/
-cp -f dotfiles/.bashrc ~/
-cp -f dotfiles/.gitconfig ~/
-cp -f dotfiles/.gitignore_global ~/
-cp -f dotfiles/vscode/settings.json "$APPDATA/Code/User/settings.json"
-cp -f dotfiles/vscode/keybindings.json "$APPDATA/Code/User/keybindings.json"
+# Check what would change
+./setup.sh diff
 
-# Reload
+# Apply dotfiles to system
+./setup.sh apply
+
+# Reload shell
 source ~/.bashrc
 ```
 
@@ -37,13 +36,7 @@ type y # Should show yazi wrapper function
 Update repo after config changes:
 
 ```bash
-# Copy configs back
-cp -f ~/.bash_profile dotfiles/
-cp -f ~/.bashrc dotfiles/
-cp -f ~/.gitconfig dotfiles/
-cp -f ~/.gitignore_global dotfiles/
-cp -f "$APPDATA/Code/User/settings.json" dotfiles/vscode/settings.json
-cp -f "$APPDATA/Code/User/keybindings.json" dotfiles/vscode/keybindings.json
+./setup.sh save
 ```
 
 ## TODO
