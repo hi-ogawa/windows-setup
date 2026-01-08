@@ -124,3 +124,15 @@ If the network selection screen is empty and shows "Install driver", the WiFi ad
    - Download WiFi driver from laptop manufacturer's website on another computer
    - Extract and copy to USB stick
    - Click "Install driver" and browse to USB
+
+### Winget "Failed when searching source: msstore" (0x8a15005e)
+
+Certificate pinning error. Fix with:
+
+```bash
+winget settings --enable BypassCertificatePinningForMicrosoftStore
+```
+
+## TODO
+
+- [ ] display resolution default 150%?
