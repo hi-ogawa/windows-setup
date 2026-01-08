@@ -16,9 +16,14 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
   - Delete all partitions on target disk, leave as unallocated space
   - Let Windows auto-create partitions
   - *Note: Laptops shipped with Windows have OEM license that activates automatically*
+- Network setup
+  - At "Connect to network" screen: `Shift + F10`
+  - Run: `OOBE\BYPASSNRO`
+  - System reboots, then select "I don't have internet"
+  - *See [Troubleshooting](#no-wifi-networks-during-installation) if WiFi networks don't appear*
 - Local account creation
-  - At sign-in screen: `Shift + F10`
-  - Run: `start ms-cxh:localonly`
+  - *With BYPASSNRO, this goes straight to local user setup (no Microsoft sign-in prompt)*
+  - *Alternative (if you have network): `Shift + F10`, run `start ms-cxh:localonly` to skip Microsoft sign-in*
   - Create local user in the dialog that appears
   - *Skip optional services and personalization prompts during setup*
 
