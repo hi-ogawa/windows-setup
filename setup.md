@@ -6,6 +6,7 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
 
 - USB installer
   - Download Windows 11 ISO from Microsoft
+  - *Download ISO matching your target language (e.g., English US) to avoid slow language pack downloads during install*
   - Create bootable USB with Ventoy from Linux
 - Boot and install
   - Boot from USB stick with Ventoy + Windows ISO
@@ -91,3 +92,30 @@ git clone https://github.com/hi-ogawa/windows-setup
   - Win + Shift + Left/Right Arrow: move window between monitors
 - File Explorer
   - Ctrl + Shift + N: create new folder
+
+## Troubleshooting
+
+### No WiFi networks during installation
+
+If the network selection screen is empty and shows "Install driver", the WiFi adapter driver isn't included in the Windows installer.
+
+**Solutions (pick one):**
+
+1. **Skip network requirement** - Easiest option
+   - Press `Shift + F10` to open command prompt
+   - Run: `OOBE\BYPASSNRO`
+   - System reboots, then select "I don't have internet"
+   - Install WiFi driver after Windows setup completes
+
+2. **USB tethering from phone**
+   - Connect phone via USB cable
+   - Enable USB tethering in phone settings
+   - Usually works without additional drivers
+
+3. **Use Ethernet**
+   - Connect via USB-to-Ethernet adapter or docking station
+
+4. **Load driver manually**
+   - Download WiFi driver from laptop manufacturer's website on another computer
+   - Extract and copy to USB stick
+   - Click "Install driver" and browse to USB
