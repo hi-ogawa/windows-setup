@@ -32,6 +32,9 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
 - Verify activation
   - Settings → System → Activation (should show "Activated with a digital license")
 - Desktop settings
+  - Display scaling
+    - Settings → Display → Scale
+    - *Windows defaults to 150% on laptops - consider 100% if you prefer more screen space*
   - Keyboard repeat
     - Settings → Accessibility → Keyboard
     - Adjust key repeat delay and rate
@@ -127,12 +130,8 @@ If the network selection screen is empty and shows "Install driver", the WiFi ad
 
 ### Winget "Failed when searching source: msstore" (0x8a15005e)
 
-Certificate pinning error. Fix with:
+Certificate pinning error. Fix with (requires admin terminal):
 
 ```bash
 winget settings --enable BypassCertificatePinningForMicrosoftStore
 ```
-
-## TODO
-
-- [ ] display resolution default 150%?
