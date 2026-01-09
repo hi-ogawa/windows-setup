@@ -1,5 +1,4 @@
 {
-  "model": "opus",
   "permissions": {
     "allow": [
       "Bash(git:*)",
@@ -15,5 +14,6 @@
       "Read(~/code/**)",
       "WebSearch"
     ]
-  }
+  },
+  "model": "opus"
 }

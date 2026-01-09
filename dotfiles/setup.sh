@@ -24,9 +24,9 @@ cmd_diff() {
     target="${mapping##*:}"
     src="$SCRIPT_DIR/$local"
     if [[ -f "$target" ]]; then
-      if ! diff -q "$src" "$target" > /dev/null 2>&1; then
+      if ! diff -q --strip-trailing-cr "$src" "$target" > /dev/null 2>&1; then
         echo "=== $local <-> $target ==="
-        diff --color=auto "$src" "$target" || true
+        diff --color=auto --strip-trailing-cr "$src" "$target" || true
         echo
       fi
     else

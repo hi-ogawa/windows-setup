@@ -82,7 +82,7 @@ scoop install yazi gh wezterm
 mkdir -p ~/code/personal
 cd ~/code/personal
 git clone https://github.com/hi-ogawa/windows-setup
-./dotfiles/setup.sh
+./dotfiles/setup.sh apply
 ```
 
 - Setup SSH and GitHub
