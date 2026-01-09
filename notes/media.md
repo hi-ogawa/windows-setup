@@ -18,7 +18,7 @@ Complete workflow from recording to publishing:
 winget install -e --id OBSProject.OBSStudio
 
 # Video editor
-winget install -e --id KDE.kdenlive
+winget install -e --id KDE.Kdenlive
 # Alternative: DaVinci Resolve (more stable on Windows)
 
 # Notation software
