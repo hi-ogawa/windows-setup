@@ -9,7 +9,9 @@ Configuration files for Windows development environment.
 - `.bashrc` - Bash configuration (yazi shell wrapper)
 - `.gitconfig` - Git configuration (aliases, LF line endings, defaults)
 - `.gitignore_global` - Global gitignore patterns (OS files, editor files, etc.)
+- `.wezterm.lua` - WezTerm terminal configuration
 - `vscode/` - VSCode config
+- `claude/` - Claude Code config
 
 ## Setup
 

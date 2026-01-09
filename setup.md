@@ -72,7 +72,7 @@ Continue the setup on Bash (from Git.Git)
 
 ```bash
 winget install -e --id Anthropic.ClaudeCode
-scoop install yazi gh
+scoop install yazi gh wezterm
 ```
 
 - Setup dotfiles
