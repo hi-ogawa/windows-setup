@@ -82,6 +82,7 @@ scoop install yazi gh
 mkdir -p ~/code/personal
 cd ~/code/personal
 git clone https://github.com/hi-ogawa/windows-setup
+./dotfiles/setup.sh
 ```
 
 - Setup SSH and GitHub
