@@ -60,6 +60,7 @@ winget install -e --id Microsoft.PowerToys
 winget install -e --id Google.Chrome
 winget install -e --id Git.Git
 winget install -e --id Microsoft.VisualStudioCode
+winget install -e --id wez.wezterm
 ```
 
 ## Dev setup
