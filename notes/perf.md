@@ -4,6 +4,16 @@ Coming from Arch Linux, Windows performance can feel sluggish. This document cov
 
 ## Windows Defender Impact
 
+### Terminology (Microsoft's confusing naming)
+
+| Term | What it is |
+|------|------------|
+| **Windows Security** | The settings app/dashboard (Settings → Privacy & security → Windows Security) |
+| **Microsoft Defender Antivirus** | The antivirus engine inside Windows Security |
+| **Windows Defender** | Old name, still used in PowerShell cmdlets (`Get-MpPreference`) and registry |
+
+They're the same thing with different names. "Virus & threat protection" in Windows Security controls Microsoft Defender Antivirus.
+
 ### Performance Issues
 - **Real-time scanning**: 50-200ms overhead on file operations
 - **Script scanning**: Significant PowerShell/Bash startup slowdown
@@ -35,8 +45,8 @@ Add-MpPreference -ExclusionPath "C:\Users\hiroshi\scoop"
 Add-MpPreference -ExclusionPath "C:\Program Files\Git"
 Add-MpPreference -ExclusionPath "C:\Windows\System32\WindowsPowerShell"
 Add-MpPreference -ExclusionPath "C:\Program Files\PowerShell"
-Add-MpPreference -ExclusionPath "C:\Program Files\WindowsTerminal"
 Add-MpPreference -ExclusionPath "C:\Program Files\WezTerm"
+# Windows Terminal (Store) is in WindowsApps - excluding scoop/code dirs is usually sufficient
 
 # Script file extensions
 Add-MpPreference -ExclusionExtension ".ps1"
@@ -50,7 +60,17 @@ Add-MpPreference -ExclusionExtension ".yaml"
 ```
 
 ### Alternative: Complete Disable
-For maximum performance (requires admin):
+
+**Simplest (GUI, temporary):**
+Windows Security → Virus & threat protection → Manage settings → Turn off all toggles:
+- Real-time protection
+- Cloud-delivered protection
+- Automatic sample submission
+- Tamper protection
+
+Note: Windows will re-enable these after some time or reboot.
+
+**PowerShell method (requires admin):**
 
 ```powershell
 # Disable all real-time protection
@@ -62,11 +82,30 @@ Set-MpPreference -DisableScriptScanning $true
 Set-MpPreference -DisableArchiveScanning $true
 ```
 
-### Third-Party Alternative
-Install lightweight antivirus and disable Defender:
-- **Bitdefender Free**: Minimal performance impact
-- **Malwarebytes Free**: On-demand scanning only
-- **Windows Security Center**: Will show warnings but functional
+**Gotchas:**
+- **Tamper Protection** blocks these changes. Must disable it first via GUI:
+  Settings → Privacy & security → Windows Security → Virus & threat protection → Manage settings → Tamper Protection → Off
+- **Windows may re-enable** Defender after updates
+- **PowerShell commands are temporary** - reset on reboot
+- **Exclusions (`Add-MpPreference`)** may still work with Tamper Protection on (behavior varies by Windows version/edition)
+
+### Third-Party Alternative (Recommended for Permanent Disable)
+Install antivirus that registers with Windows Security Center - Defender automatically enters "passive mode":
+- **Bitdefender Free**: Registers with WSC, minimal performance impact
+- **Malwarebytes Premium**: Registers with WSC (Free version does NOT - it runs alongside Defender)
+
+**Why this works but manual disable doesn't:**
+
+Third-party AV uses Windows Security Center (WSC) API to register as the primary antivirus. When WSC detects a registered provider:
+1. Windows automatically puts Defender in passive/disabled mode
+2. Tamper Protection allows this because it's the "blessed" pathway
+
+To register with WSC, software must:
+- Use private Microsoft APIs (not publicly documented)
+- Run as a **Protected Process** (requires Microsoft code-signing certificate)
+- Be recognized by WSC as a legitimate security vendor
+
+Microsoft's design intent: Defender should only be disabled when *replaced* by another security product, not turned off entirely. From their perspective, "user disabling protection = security risk to block" while "another AV taking over = acceptable transition."
 
 ## System-Level Optimizations
 
@@ -94,10 +133,11 @@ sc config "WSearch" start= disabled  # Windows Search (if not needed)
 
 ## Storage Optimization
 
-### Dev Drive (Windows 11 24H2+)
+### Dev Drive (Windows 11 22H2+)
 ```powershell
 # Create Dev Drive for better performance
 # Requires ReFS format and dedicated partition
+# Available since Build 22621.2361 (Oct 2023)
 ```
 
 ### SSD Optimization
@@ -180,9 +220,9 @@ Measure-Command { git status }
 
 ### Reset Exclusions
 ```powershell
-# Remove all exclusions
-Remove-MpPreference -ExclusionPath *
-Remove-MpPreference -ExclusionExtension *
+# Remove all exclusions (must iterate - wildcard doesn't work)
+(Get-MpPreference).ExclusionPath | ForEach-Object { Remove-MpPreference -ExclusionPath $_ }
+(Get-MpPreference).ExclusionExtension | ForEach-Object { Remove-MpPreference -ExclusionExtension $_ }
 ```
 
 ### Restore Default Settings
@@ -205,8 +245,8 @@ Set-MpPreference -DisableScriptScanning $false
 5. **Consider third-party lightweight antivirus**
 
 ### For Maximum Performance
-1. **Complete Defender disable**
-2. **Install Bitdefender Free**
+1. **Install Bitdefender Free** (puts Defender in passive mode - most reliable on Windows 11 24H2+)
+2. **Or use strategic exclusions** if keeping Defender
 3. **Disable all unnecessary services**
 4. **Use Dev Drive if available**
 5. **Optimize network settings**
