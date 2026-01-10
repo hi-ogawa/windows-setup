@@ -64,11 +64,26 @@ Install-Module -Name BurntToast -Scope CurrentUser
 New-BurntToastNotification -Text 'Claude Code', 'Waiting for input'
 ```
 
-Then use in hook:
+### Custom Script with Hook Input
+
+Hooks receive [JSON input via stdin](https://code.claude.com/docs/en/hooks#notification-input):
 
 ```json
 {
-  "command": "powershell.exe -c \"New-BurntToastNotification -Text 'Claude Code', 'Notification'\""
+  "session_id": "abc123",
+  "transcript_path": "/path/to/transcript.jsonl",
+  "cwd": "/current/dir",
+  "hook_event_name": "Notification",
+  "message": "Claude needs your permission to use Bash",
+  "notification_type": "permission_prompt"
+}
+```
+
+See [notify.sh](../dotfiles/claude/notify.sh) for a script that parses this and shows the actual message:
+
+```json
+{
+  "command": "bash ~/.claude/notify.sh"
 }
 ```
 
@@ -86,4 +101,5 @@ Then use in hook:
 ## See Also
 
 - [dotfiles/claude/settings.json](../dotfiles/claude/settings.json) - Current configuration
-- [Claude Code Settings Docs](https://code.claude.com/docs/en/settings)
+- [dotfiles/claude/notify.sh](../dotfiles/claude/notify.sh) - Notification script
+- [Claude Code Hooks Docs](https://code.claude.com/docs/en/hooks)

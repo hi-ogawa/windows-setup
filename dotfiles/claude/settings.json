@@ -24,7 +24,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -c \"New-BurntToastNotification -Text 'Claude Code', 'Notification'\""
+            "command": "bash ~/.claude/notify.sh"
           }
         ]
       }

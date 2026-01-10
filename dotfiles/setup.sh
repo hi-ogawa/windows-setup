@@ -16,6 +16,7 @@ FILES=(
   "vscode/settings.json:$APPDATA/Code/User/settings.json"
   "vscode/keybindings.json:$APPDATA/Code/User/keybindings.json"
   "claude/settings.json:$HOME/.claude/settings.json"
+  "claude/notify.sh:$HOME/.claude/notify.sh"
 )
 
 cmd_diff() {
