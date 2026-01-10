@@ -1,10 +1,92 @@
-# Shell Performance on Windows
+# Shell on Windows
 
-Coming from Arch Linux, both PowerShell and Bash feel noticeably slower on Windows. This document analyzes the startup latency and performance characteristics.
+Notes on Windows shell architecture and performance, coming from Arch Linux.
 
-## Startup Latency Comparison
+## PowerShell vs Bash Architecture
 
-### PowerShell (Windows 5.1/7+)
+### Layering Comparison
+
+```
+Bash (Unix)                          PowerShell (Windows)
+─────────────────────────────────    ─────────────────────────────────
+Shell (bash)                         Shell + Runtime (PowerShell.exe)
+  - REPL, scripting                    - REPL, scripting
+  - limited builtins                   - .NET CLR runtime
+  - strings, arrays, globs             - .NET objects
+         │                                      │
+         │ fork/exec                            │ in-process
+         ▼                                      ▼
+External commands (ls, grep, etc.)   Cmdlets (.NET classes in DLLs)
+  - separate processes                 - loaded into same process
+  - communicate via stdin/stdout       - communicate via object pipeline
+  - from coreutils, etc.               - from modules
+         │                                      │
+         │ POSIX syscalls                       │ .NET → Win32 API
+         ▼                                      ▼
+Kernel                               Windows Kernel
+```
+
+### Key Differences
+
+| Aspect | Bash | PowerShell |
+|--------|------|------------|
+| Runtime | minimal shell | full .NET CLR |
+| Data types | strings (mostly) | .NET objects |
+| Commands | external processes | in-process cmdlets |
+| IPC | stdin/stdout bytes | object pipeline |
+| Composability | universal (any process) | within PowerShell only |
+
+### Cmdlet Sources
+
+```
+PowerShell.exe
+├── Core cmdlets (ship with PowerShell)
+│   └── Get-ChildItem, Select-Object, etc.
+│
+├── Windows modules (ship with Windows OS)
+│   └── Defender, DISM, Hyper-V, Storage, etc.
+│   └── e.g., C:\Windows\System32\WindowsPowerShell\v1.0\Modules\Defender
+│
+└── Third-party modules (install separately)
+    └── Az, AWS.Tools, etc.
+```
+
+Check current settings: `Get-MpPreference`
+List module location: `Get-Module Defender -ListAvailable`
+
+### Better Mental Model
+
+PowerShell is closer to **Node.js/Python with REPL** than to bash:
+- Bash: minimal language, orchestrates external processes
+- PowerShell: full .NET language with shell conveniences
+- Node.js: full JS language, can add shell-like usage via libs
+
+Cmdlets are just **standard library** for a .NET scripting language.
+
+### External Commands in PowerShell
+
+When calling external programs (git, etc.), PowerShell falls back to text:
+```powershell
+# Cmdlet to cmdlet: objects flow
+Get-ChildItem | Where-Object { $_.Length -gt 1MB }
+
+# External command: text, not objects
+git status | Where-Object { $_ -match "modified" }
+```
+
+This is the tradeoff: rich object model in-process, but no universal IPC primitive like Unix stdin/stdout.
+
+### References
+
+- [PowerShell (open source)](https://github.com/PowerShell/PowerShell)
+- [PowerShell documentation](https://learn.microsoft.com/en-us/powershell/)
+- [Defender module](https://learn.microsoft.com/en-us/powershell/module/defender/) - example of Windows-shipped module
+
+## Performance
+
+### Startup Latency
+
+#### PowerShell (Windows 5.1/7+)
 - **Typical startup**: 1-3 seconds
 - **Cross-platform PowerShell Core**: 2-4 seconds (slower due to .NET runtime)
 - **Major slowdown factors**:
@@ -12,22 +94,20 @@ Coming from Arch Linux, both PowerShell and Bash feel noticeably slower on Windo
   - Antivirus scanning of PowerShell scripts
   - Network-dependent module imports
 
-### Git Bash
-- **Typical startup**: 0.5-2 seconds 
+#### Git Bash
+- **Typical startup**: 0.5-2 seconds
 - **Can be extremely slow** (10+ seconds) with:
   - Heavy `.bashrc`/`.bash_profile` configurations
   - Antivirus interference
   - Network drive mappings
   - Large PATH variables
 
-### WSL Bash
+#### WSL Bash
 - **Typical startup**: 1-2 seconds
 - **Generally faster** than Git Bash for native Linux tools
 - **Overhead**: WSL subsystem initialization
 
-## Performance Bottlenecks
-
-### Common Issues
+### Bottlenecks
 1. **Profile loading time** (both shells)
 2. **Antivirus real-time scanning**
 3. **Module/extension loading**

@@ -18,12 +18,17 @@ Coming from Arch Linux, Windows performance can feel sluggish. This document cov
 
 ## Windows Defender Optimization
 
+### Check Current Settings
+```powershell
+Get-MpPreference
+```
+
 ### Recommended: Strategic Exclusions
 Instead of complete disable, use targeted exclusions for development:
 
 ```powershell
 # Development directories
-Add-MpPreference -ExclusionPath "C:\Users\hiroshi\code"p
+Add-MpPreference -ExclusionPath "C:\Users\hiroshi\code"
 Add-MpPreference -ExclusionPath "C:\Users\hiroshi\scoop"
 
 # Shell and terminal tools
