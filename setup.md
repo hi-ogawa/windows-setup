@@ -76,13 +76,14 @@ scoop install yazi gh wezterm
 ```
 
 - Setup dotfiles
-  - see [dotfiles/README.md](./dotfiles/README.md)
+  - see https://github.com/hi-ogawa/dotfiles
 
 ```sh
 mkdir -p ~/code/personal
 cd ~/code/personal
-git clone https://github.com/hi-ogawa/windows-setup
-./dotfiles/setup.sh apply
+git clone https://github.com/hi-ogawa/dotfiles
+cd dotfiles
+./sync.sh apply
 ```
 
 - Setup SSH and GitHub

@@ -25,16 +25,16 @@ core.fscache = true
 
 ## User configuration
 
-See **[dotfiles/.gitconfig](../dotfiles/.gitconfig)** for the config.
+See **[.gitconfig](https://github.com/hi-ogawa/dotfiles/blob/main/.gitconfig)** for the config.
 
 Key settings:
 - `core.autocrlf = false` - Override Git for Windows default (use LF everywhere)
 - Git aliases (st, ci, co, br, lg, lga)
 - `push.autoSetupRemote = true` - No need for -u flag on first push
 
-Apply via:
+Apply via [dotfiles](https://github.com/hi-ogawa/dotfiles):
 ```bash
-cp -f dotfiles/.gitconfig ~/
+./sync.sh apply gitconfig
 ```
 
 ## SSH and GitHub setup

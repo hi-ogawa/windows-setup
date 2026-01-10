@@ -51,5 +51,5 @@ Git Bash + Windows toolchains creates friction:
 
 ## Git Configuration
 
-See [dev-git.md](dev-git.md) and [dotfiles/.gitconfig](../dotfiles/.gitconfig)
+See [dev-git.md](dev-git.md) and [.gitconfig](https://github.com/hi-ogawa/dotfiles/blob/main/.gitconfig)
 

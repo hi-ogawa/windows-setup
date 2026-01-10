@@ -79,7 +79,7 @@ Hooks receive [JSON input via stdin](https://code.claude.com/docs/en/hooks#notif
 }
 ```
 
-See [notify.sh](../dotfiles/claude/notify.sh) for a script that parses this and shows the actual message:
+See [notify.sh](https://github.com/hi-ogawa/dotfiles/blob/main/claude/notify.sh) for a script that parses this and shows the actual message:
 
 ```json
 {
@@ -100,6 +100,6 @@ See [notify.sh](../dotfiles/claude/notify.sh) for a script that parses this and 
 
 ## See Also
 
-- [dotfiles/claude/settings.json](../dotfiles/claude/settings.json) - Current configuration
-- [dotfiles/claude/notify.sh](../dotfiles/claude/notify.sh) - Notification script
+- [claude/settings.json](https://github.com/hi-ogawa/dotfiles/blob/main/claude/settings.json) - Current configuration
+- [claude/notify.sh](https://github.com/hi-ogawa/dotfiles/blob/main/claude/notify.sh) - Notification script
 - [Claude Code Hooks Docs](https://code.claude.com/docs/en/hooks)
