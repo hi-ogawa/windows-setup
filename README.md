@@ -9,5 +9,3 @@ See also: [Arch Linux setup gist](https://gist.github.com/hi-ogawa/a873d9406f580
 - **[setup.md](setup.md)** - Main reference: installation, configuration, dev tools
 - **[dotfiles/](dotfiles/)** - Configuration files (.bashrc, .gitconfig, vscode, claude)
 - **[notes/](notes/)** - Additional documentation
-  - [dev.md](notes/dev.md) - Development environment details
-  - [media.md](notes/media.md) - Media and content creation workflow

@@ -12,8 +12,22 @@
       "Bash(sort:*)",
       "Bash(wget:*)",
       "Read(~/code/**)",
+      "WebFetch(domain:github.com)",
       "WebSearch"
     ]
   },
-  "model": "opus"
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -c \"New-BurntToastNotification -Text 'Claude Code', 'Notification'\""
+          }
+        ]
+      }
+    ]
+  }
 }

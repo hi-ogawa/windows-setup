@@ -5,13 +5,13 @@ Configuration files for Windows development environment.
 ## Contents
 
 - `setup.sh` - Dotfiles manager script (diff/apply/save)
-- `.bash_profile` - Bash login shell config (sources `.bashrc`)
-- `.bashrc` - Bash configuration (yazi shell wrapper)
-- `.gitconfig` - Git configuration (aliases, LF line endings, defaults)
-- `.gitignore_global` - Global gitignore patterns (OS files, editor files, etc.)
-- `.wezterm.lua` - WezTerm terminal configuration
-- `vscode/` - VSCode config
-- `claude/` - Claude Code config
+- `.bash_profile` - Bash login shell config
+- `.bashrc` - Bash configuration
+- `.gitconfig` - [Git configuration](https://git-scm.com/docs/git-config) (aliases, LF line endings, defaults)
+- `.gitignore_global` - [Global gitignore](https://git-scm.com/docs/gitignore) patterns (OS files, editor files, etc.)
+- `.wezterm.lua` - [WezTerm](https://wezfurlong.org/wezterm/config/files.html) terminal configuration
+- `vscode/` - [VSCode](https://code.visualstudio.com/docs/getstarted/settings) config
+- `claude/` - [Claude Code](https://code.claude.com/docs/en/settings) config
 
 ## Setup
 
