@@ -124,13 +124,13 @@ git clone git@github.com:user/repo.git
 code .
 ```
 
-VSCode with Remote-WSL extension handles the bridging automatically.
+VSCode with WSL extension handles the bridging automatically.
 
 ## VSCode + WSL Integration
 
-VSCode Remote - WSL extension:
-- Open WSCode in Windows
-- Install "Remote - WSL" extension
+VSCode WSL extension:
+- Open VSCode in Windows
+- Install "WSL" extension
 - `Ctrl+Shift+P` → "WSL: New Window" opens VSCode connected to WSL
 - VSCode terminal is now Linux bash (not PowerShell)
 - File operations happen in Linux filesystem
@@ -166,7 +166,7 @@ VSCode Remote - WSL extension:
 
 - [ ] Install WSL2
 - [ ] Choose distro (Ubuntu default, or Arch/Debian/etc.)
-- [ ] Install VSCode Remote - WSL extension
+- [ ] Install VSCode WSL extension
 - [ ] Set up dev tools in WSL (git, python, node, claude)
 - [ ] Test Claude Code in WSL environment
 - [ ] Decide: Pure WSL workflow vs hybrid Windows/WSL
