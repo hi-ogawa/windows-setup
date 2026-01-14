@@ -1,5 +1,53 @@
 # Development Environment - WSL Alternative
 
+## Installation
+
+```powershell
+wsl --install Ubuntu
+```
+
+- Installs WSL2 with specified distro
+- Requires reboot
+
+**After reboot - launch WSL:**
+```powershell
+wsl                          # From PowerShell/Terminal
+# Or: Search "Ubuntu" (or distro name) in Start menu
+# Or: Open Windows Terminal → dropdown → select distro
+```
+
+**First launch behavior varies by distro:**
+- **Ubuntu/Debian**: Auto-prompts to create Linux username/password (separate from Windows account)
+- **Arch Linux**: Drops you into root shell - no auto-prompt. Manually create user, then set default:
+  ```powershell
+  wsl --manage archlinux --set-default-user yourusername
+  ```
+
+**Note:** `wsl --install` alone (without distro name) is documented to install Ubuntu by default, but in practice it may only install WSL components without a distro if WSL is already partially present. Always specify the distro explicitly.
+
+**List and install distros:**
+```powershell
+wsl --list --online          # List available distros
+wsl --install Debian         # Install Debian
+wsl --install archlinux      # Install Arch Linux
+```
+
+### Known Gotchas
+
+| Issue | Symptom | Fix |
+|-------|---------|-----|
+| WSL already present | `wsl --install` shows help instead of installing | Specify distro: `wsl --install Ubuntu` |
+| Windows 11 24H2 | "Catastrophic failure" | Ensure WSL installs on C: drive (system drive) |
+| Virtualization disabled | Install fails or WSL2 won't start | Enable virtualization in BIOS |
+| Stuck at 0% | Install hangs indefinitely | Use `wsl --install --web-download <distro>` |
+| WSL_E_DEFAULT_DISTRO_NOT_FOUND | Distro won't launch after install | Run `wsl --update` first, enable Hyper-V |
+
+**Recommended fresh install:**
+```powershell
+wsl --update                 # Update WSL first (if already present)
+wsl --install archlinux      # Then install distro explicitly
+```
+
 ## Why WSL?
 
 Coming from Arch Linux, native Windows PowerShell development introduces friction:
@@ -77,22 +125,6 @@ code .
 ```
 
 VSCode with Remote-WSL extension handles the bridging automatically.
-
-## Installation
-
-```powershell
-wsl --install
-```
-
-- Installs WSL2 with Ubuntu by default
-- Requires reboot
-- First launch creates Linux user account
-
-**Alternative distros:**
-```powershell
-wsl --list --online          # List available distros
-wsl --install -d Debian      # Example: install Debian instead
-```
 
 ## VSCode + WSL Integration
 
