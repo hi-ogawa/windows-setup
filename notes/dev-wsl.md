@@ -229,4 +229,4 @@ curl -o /dev/null https://speed.cloudflare.com/__down?bytes=100000000
 
 ## Summary
 
-WSL is the recommended approach for development on Windows. Apply your dotfiles in WSL - that's your main environment. Windows-side config is rarely needed if you consistently work through WSL.
+WSL is the recommended approach for development on Windows. The [dotfiles sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and handles both environments - Linux config to WSL, VSCode settings to Windows host. Just run `./sync.sh apply` once from WSL.

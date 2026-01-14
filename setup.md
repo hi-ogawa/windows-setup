@@ -62,52 +62,35 @@ winget install -e --id Git.Git
 winget install -e --id Microsoft.VisualStudioCode
 ```
 
-## Dev setup
-
-**Use WSL for terminal/development work.** Git Bash has ~100ms overhead per command which adds up quickly. See [notes/dev-wsl.md](notes/dev-wsl.md) for details.
-
-### Install WSL
+- Install scoop (https://scoop.sh) for open source Windows apps:
 
 ```powershell
-wsl --install Ubuntu
+scoop install anki wezterm
 ```
 
-Reboot, then launch from Start menu or Windows Terminal.
+## Dev setup (WSL)
 
-### WSL setup
+- Install WSL
+  - `wsl --install Ubuntu`
+  - See [notes/dev-wsl.md](notes/dev-wsl.md) for details.
 
-Inside WSL:
-
-- Install tools (Ubuntu):
-
-```bash
-sudo apt update && sudo apt install -y git gh ripgrep fd-find
-```
-
-- Install Claude Code:
-
-```bash
-npm install -g @anthropic-ai/claude-code
-```
+- Install tools
+  - `sudo apt update`
+  - setup Homebrew https://docs.brew.sh/Homebrew-on-Linux
+    - `brew install yazi gh`
 
 - Setup dotfiles (see https://github.com/hi-ogawa/dotfiles):
-
-```bash
-mkdir -p ~/code/personal && cd ~/code/personal
-git clone https://github.com/hi-ogawa/dotfiles
-cd dotfiles && ./sync.sh apply
-```
+  - `git clone https://github.com/hi-ogawa/dotfiles` and `./sync.sh apply`
 
 - Setup SSH and GitHub:
-
-```bash
-ssh-keygen -t ed25519 -C <email>
-gh auth login
-```
+  - `ssh-keygen -t ed25519 -C <email>`
+  - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
 ### Dotfiles: WSL vs Windows
 
-Apply dotfiles in WSL - that's your main environment. Windows-side config (e.g., `C:\Users\<name>\.gitconfig`) is usually unnecessary if you work through WSL. Only set it up if you hit a specific issue.
+The [sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and routes config appropriately:
+- Linux dotfiles → WSL home (`~/.bashrc`, `~/.gitconfig`, etc.)
+- VSCode settings → Windows host (`%APPDATA%/Code/User/...`)
 
 ## Desktop tips
 
