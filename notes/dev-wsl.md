@@ -158,6 +158,49 @@ VSCode WSL extension:
 - File operations happen in Linux filesystem
 - Extensions run in WSL context
 
+### Common Issue: `code` Command "Exec format error"
+
+**Symptom:**
+```bash
+$ code .
+/mnt/c/Users/.../AppData/Local/Programs/Microsoft VS Code/Code.exe: Exec format error
+```
+
+**Fix:**
+Restart WSL from PowerShell:
+```powershell
+wsl --shutdown
+```
+Then relaunch WSL and try again.
+
+## Network Performance Issues
+
+WSL2 has known network bottlenecks that can significantly reduce download/upload speeds.
+
+**Symptoms:**
+- Native Windows: 100+ Mbps
+- WSL2: 3-20 Mbps (or worse)
+
+**Main cause: Large Send Offload (LSO)**
+The virtual ethernet adapter has LSO enabled by default, which can severely throttle network performance.
+
+**Fix (PowerShell as admin):**
+```powershell
+Disable-NetAdapterLso -Name "vEthernet (WSL)" -IncludeHidden
+```
+
+**Additional fixes:**
+1. **Windows Defender exclusions** - Add WSL folders to antivirus exceptions
+2. **Restart WSL** - After config changes: `wsl --shutdown` then relaunch
+
+**Test speeds:**
+```bash
+# In WSL
+curl -o /dev/null https://speed.cloudflare.com/__down?bytes=100000000
+```
+
+**Note:** Even after fixes, WSL2 networking won't match native Linux due to virtualization overhead. Most users report "good enough for dev work" after applying the LSO fix.
+
 ## Workflow
 
 1. Windows-side: VSCode, browser, GUI apps
