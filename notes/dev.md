@@ -37,17 +37,7 @@
 
 ## Shell Decision for Development
 
-**Question: Which shell for Python/Node.js development?**
-
-Git Bash + Windows toolchains creates friction:
-- Different venv activation (`Activate.ps1` vs `activate`)
-- Path format inconsistencies (backslash vs forward slash)
-- package.json scripts may fail in wrong shell
-
-**Options:**
-1. **PowerShell** - Commit to Windows native, use Git Bash only for git ops
-2. **WSL** - Full Linux environment (see [dev-wsl.md](dev-wsl.md))
-3. **Git Bash** - Awkward middle ground, mixing Windows binaries with Unix shell
+**Use WSL.** Git Bash has ~100ms overhead per command (process creation) which makes interactive shell work painfully slow. See [dev-wsl.md](dev-wsl.md) for setup and benchmarks.
 
 ## Git Configuration
 

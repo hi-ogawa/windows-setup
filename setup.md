@@ -62,33 +62,35 @@ winget install -e --id Git.Git
 winget install -e --id Microsoft.VisualStudioCode
 ```
 
-## Dev setup
+- Install scoop (https://scoop.sh) for Windows native apps:
 
-Continue the setup on Bash (from Git.Git)
-
-- Install scoop: https://scoop.sh
-
-- Install more tools:
-
-```bash
-winget install -e --id Anthropic.ClaudeCode
-scoop install yazi gh wezterm
+```powershell
+scoop install wezterm anki
 ```
 
-- Setup dotfiles
-  - see https://github.com/hi-ogawa/dotfiles
+## Dev setup (WSL)
 
-```sh
-mkdir -p ~/code/personal
-cd ~/code/personal
-git clone https://github.com/hi-ogawa/dotfiles
-cd dotfiles
-./sync.sh apply
-```
+- Install WSL
+  - `wsl --install Ubuntu`
+  - See [notes/dev-wsl.md](notes/dev-wsl.md) for details.
 
-- Setup SSH and GitHub
+- Install tools
+  - `sudo apt update`
+  - setup Homebrew https://docs.brew.sh/Homebrew-on-Linux
+    - `brew install yazi gh`
+
+- Setup dotfiles (see https://github.com/hi-ogawa/dotfiles):
+  - `git clone https://github.com/hi-ogawa/dotfiles` and `./sync.sh apply`
+
+- Setup SSH and GitHub:
   - `ssh-keygen -t ed25519 -C <email>`
   - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+### Dotfiles: WSL vs Windows
+
+The [sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and routes config appropriately:
+- Linux dotfiles → WSL home (`~/.bashrc`, `~/.gitconfig`, etc.)
+- VSCode settings → Windows host (`%APPDATA%/Code/User/...`)
 
 ## Desktop tips
 

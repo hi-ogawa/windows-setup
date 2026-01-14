@@ -1,4 +1,4 @@
-# Development Environment - WSL Alternative
+# Development Environment - WSL (Recommended)
 
 ## Installation
 
@@ -227,12 +227,6 @@ curl -o /dev/null https://speed.cloudflare.com/__down?bytes=100000000
 - Pin WSL home in File Explorer: `\\wsl$\Ubuntu\home\username` → Quick Access
 - Or: Generate files to `/mnt/c/Users/hiroshi/Downloads` for easy Windows access (slower, but trivial to find)
 
-## Follow-up
+## Summary
 
-- [ ] Install WSL2
-- [ ] Choose distro (Ubuntu default, or Arch/Debian/etc.)
-- [ ] Install VSCode WSL extension
-- [ ] Set up dev tools in WSL (git, python, node, claude)
-- [ ] Test Claude Code in WSL environment
-- [ ] Decide: Pure WSL workflow vs hybrid Windows/WSL
-- [ ] Document WSL-specific quirks and tips
+WSL is the recommended approach for development on Windows. The [dotfiles sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and handles both environments - Linux config to WSL, VSCode settings to Windows host. Just run `./sync.sh apply` once from WSL.

@@ -137,10 +137,10 @@ $PSModuleAutoLoadingPreference = "None"
 # Launch mintty directly: "C:\Program Files\Git\usr\bin\mintty.exe"
 ```
 
-### WSL Considerations
-- **Best performance** for Linux-native workflows
-- **Additional overhead** for Windows file interop
-- **Recommended** if you need full Linux environment
+### WSL (Recommended)
+- **Best performance** for development workflows
+- **Additional overhead** only for cross-filesystem operations (avoid `/mnt/c/`)
+- **Use this** for all terminal/development work
 
 ## Terminal Emulator Options
 
@@ -182,11 +182,9 @@ $PSModuleAutoLoadingPreference = "None"
 
 ## Recommendations
 
-1. **For Windows-native work**: PowerShell with optimized profile
-2. **For Linux tools**: WSL2 with Windows Terminal
-3. **For Git workflows**: Git Bash with minimal configuration
-4. **For best performance**: Consider native Linux (dual boot/VM)
-5. **For fastest Git Bash**: Use mintty directly (bypass Windows Terminal)
+1. **For development**: WSL2 - no contest, use this for all terminal work
+2. **For Windows-native tasks**: PowerShell (rarely needed)
+3. **Avoid**: Git Bash for development (~100ms overhead per command makes interactive work slow)
 
 ## Configuration Tips
 
