@@ -62,10 +62,10 @@ winget install -e --id Git.Git
 winget install -e --id Microsoft.VisualStudioCode
 ```
 
-- Install scoop (https://scoop.sh) for open source Windows apps:
+- Install scoop (https://scoop.sh) for Windows native apps:
 
 ```powershell
-scoop install anki wezterm
+scoop install wezterm anki
 ```
 
 ## Dev setup (WSL)
