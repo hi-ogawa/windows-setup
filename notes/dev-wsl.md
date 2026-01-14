@@ -63,6 +63,28 @@ Coming from Arch Linux, native Windows PowerShell development introduces frictio
 - Better compatibility with Linux-focused dev tools
 - Can still access Windows filesystem (`/mnt/c/...`)
 
+### Performance Comparison
+
+Even trivial commands show significant overhead in Git Bash (MSYS2) vs WSL:
+
+**Git Bash on Windows (`/c/...`):**
+```bash
+$ time echo foo
+real    0m0.100s  # ~100ms overhead per command
+$ time pwd
+real    0m0.098s
+```
+
+**WSL (native Linux):**
+```bash
+$ time echo foo
+real    0m0.000s  # Near-instant
+$ time pwd
+real    0m0.000s
+```
+
+The ~100ms process creation overhead in Git Bash adds up quickly during interactive shell work (git operations, build scripts, npm tasks). WSL has no emulation layer, so every command feels instant.
+
 ## Filesystem
 
 WSL has **two separate filesystems** that can access each other:
