@@ -105,6 +105,16 @@ The [sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and routes c
 - File Explorer
   - Ctrl + Shift + N: create new folder
 
+## Drivers and OEM Software
+
+See [notes/drivers.md](notes/drivers.md) for details on:
+- Where drivers come from (Windows Update vs OEM vs vendor)
+- OEM support tools and workflows
+- Background software (what to keep/disable)
+- Troubleshooting audio glitches
+
+**Quick summary:** If you installed from a clean Microsoft ISO (not OEM recovery image), check your laptop manufacturer's support page for driver updates. Windows Update includes drivers but they're often outdated. Prioritize BIOS, chipset, and audio drivers.
+
 ## Troubleshooting
 
 ### No WiFi networks during installation
