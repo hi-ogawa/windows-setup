@@ -20,6 +20,7 @@ See also: [drivers.md](drivers.md) for general Windows audio troubleshooting (sa
 | `ACPI.sys` | Dell power management | Try power plan fixes; may require clean Windows install |
 | `amdppm.sys` | AMD power management | Disable Cool N Quiet in BIOS, Ultimate Performance plan |
 | `nvlddmkm.sys` | NVIDIA GPU | Update/rollback drivers, disable GPU scheduling |
+| `tcpip.sys` | WSL2/Hyper-V network switch | Disable Hyper-V or unpin WSL folders from Quick Access |
 
 ### Step 3: Re-test
 - Run LatencyMon again after applying fix
@@ -207,6 +208,7 @@ DPC latency is NOT showing as the problem. Possible explanations:
 - [ ] Test YouTube-only on built-in speakers (simpler reproduction)
 - [ ] Disable AMD Cool N Quiet in BIOS for accurate measurement
 - [ ] Research: could AMD Ryzen Master software cause audio issues?
+- [ ] Test with Hyper-V/WSL disabled (see WSL/Hyper-V section below)
 
 ### Current Conclusion
 
@@ -216,18 +218,59 @@ After standard troubleshooting (see [drivers.md](drivers.md)) and LatencyMon dia
 - AMD USB controller + Focusrite interaction
 - Windows audio subsystem edge case with this hardware
 - BIOS/firmware (Dell Inspiron 14 5425 specific)
+- Hyper-V/WSL2 virtualization overhead (if installed)
 
 **Pragmatic options:**
 1. Check for BIOS update (currently 1.25.0)
 2. Check for Realtek/Focusrite driver updates
 3. Try different USB port (USB-C vs USB-A)
 4. **Test 256-sample buffer** - not yet confirmed if this fixes glitches
-5. Accept as hardware limitation of this laptop for low-latency audio
-6. **Replace laptop** - move Windows setup to Intel-based or audio-friendly hardware
+5. **Disable Hyper-V/WSL** - test if virtualization layer is a factor
+6. Accept as hardware limitation of this laptop for low-latency audio
+7. **Replace laptop** - move Windows setup to Intel-based or audio-friendly hardware
 
 Option 6 is a valid solution. The older Intel laptop worked fine, suggesting Intel or a different AMD system might not have this issue. If software pedals are the core goal, hardware that supports it reliably is worth considering.
 
 **See [laptop-audio-upgrade.md](laptop-audio-upgrade.md) for detailed upgrade research and recommendations.**
+
+### WSL/Hyper-V Impact
+
+WSL2 requires Hyper-V, which may affect real-time audio performance.
+
+**How Hyper-V affects audio:**
+- With Hyper-V enabled, Windows runs as a "root partition" on the hypervisor, not directly on hardware
+- Adds a layer between hardware interrupts and the Windows kernel
+- Microsoft documentation warns: "applications relying on sub-10ms timers such as live music mixing applications...could have issues"
+
+**Known WSL2 bug ([GitHub #7178](https://github.com/microsoft/WSL/issues/7178)):**
+- Hyper-V virtual network switch restarts every 2-10 minutes
+- Causes `tcpip.sys` DPC spikes up to ~24ms
+- Triggers audio stuttering on USB audio devices
+- Occurs even when WSL is idle
+
+**Workarounds for the network switch issue:**
+- Unpin WSL folders from Quick Access in Explorer
+- Remove symlinks pointing to WSL directories from user profile
+
+**To test if Hyper-V is a factor:**
+```powershell
+# Disable Hyper-V
+bcdedit /set hypervisorlaunchtype off
+# Reboot, then test audio
+
+# Re-enable after testing
+bcdedit /set hypervisorlaunchtype auto
+```
+
+**If disabling Hyper-V helps, options:**
+1. Use WSL1 instead (no Hyper-V required, worse Linux compatibility)
+2. Dual-boot Linux for dev work
+3. Keep WSL disabled when doing audio work (`wsl --shutdown` isn't enough - Hyper-V stays active)
+
+**Sources:**
+- [WSL GitHub #7178 - Network switch causing audio stuttering](https://github.com/microsoft/WSL/issues/7178)
+- [VI-Control - Hyper-V and DAW discussion](https://vi-control.net/community/threads/anyone-ever-run-windows-in-hyper-v.111974/)
+- [Microsoft Q&A - Sound stutters with Hyper-V](https://learn.microsoft.com/en-us/answers/questions/466983/sound-stutters-lags-pops-(on-host-machine)-wheneve)
 
 ### Trade-off Decision
 
