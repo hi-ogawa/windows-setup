@@ -28,12 +28,12 @@ Kernel                               Windows Kernel
 
 ### Key Differences
 
-| Aspect | Bash | PowerShell |
-|--------|------|------------|
-| Runtime | minimal shell | full .NET CLR |
-| Data types | strings (mostly) | .NET objects |
-| Commands | external processes | in-process cmdlets |
-| IPC | stdin/stdout bytes | object pipeline |
+| Aspect        | Bash                    | PowerShell             |
+| ------------- | ----------------------- | ---------------------- |
+| Runtime       | minimal shell           | full .NET CLR          |
+| Data types    | strings (mostly)        | .NET objects           |
+| Commands      | external processes      | in-process cmdlets     |
+| IPC           | stdin/stdout bytes      | object pipeline        |
 | Composability | universal (any process) | within PowerShell only |
 
 ### Cmdlet Sources
@@ -57,6 +57,7 @@ List module location: `Get-Module Defender -ListAvailable`
 ### Better Mental Model
 
 PowerShell is closer to **Node.js/Python with REPL** than to bash:
+
 - Bash: minimal language, orchestrates external processes
 - PowerShell: full .NET language with shell conveniences
 - Node.js: full JS language, can add shell-like usage via libs
@@ -66,6 +67,7 @@ Cmdlets are just **standard library** for a .NET scripting language.
 ### External Commands in PowerShell
 
 When calling external programs (git, etc.), PowerShell falls back to text:
+
 ```powershell
 # Cmdlet to cmdlet: objects flow
 Get-ChildItem | Where-Object { $_.Length -gt 1MB }
@@ -87,6 +89,7 @@ This is the tradeoff: rich object model in-process, but no universal IPC primiti
 ### Startup Latency
 
 #### PowerShell (Windows 5.1/7+)
+
 - **Typical startup**: 1-3 seconds
 - **Cross-platform PowerShell Core**: 2-4 seconds (slower due to .NET runtime)
 - **Major slowdown factors**:
@@ -95,6 +98,7 @@ This is the tradeoff: rich object model in-process, but no universal IPC primiti
   - Network-dependent module imports
 
 #### Git Bash
+
 - **Typical startup**: 0.5-2 seconds
 - **Can be extremely slow** (10+ seconds) with:
   - Heavy `.bashrc`/`.bash_profile` configurations
@@ -103,17 +107,20 @@ This is the tradeoff: rich object model in-process, but no universal IPC primiti
   - Large PATH variables
 
 #### WSL Bash
+
 - **Typical startup**: 1-2 seconds
 - **Generally faster** than Git Bash for native Linux tools
 - **Overhead**: WSL subsystem initialization
 
 ### Bottlenecks
+
 1. **Profile loading time** (both shells)
 2. **Antivirus real-time scanning**
 3. **Module/extension loading**
 4. **Network path resolution**
 
 ### Windows Terminal Impact
+
 - **Pre-1.19**: Significant input latency issues
 - **Post-1.19**: ~50% latency improvement, now competitive
 - **GPU acceleration** helps with rendering, not shell startup
@@ -121,6 +128,7 @@ This is the tradeoff: rich object model in-process, but no universal IPC primiti
 ## Optimization Strategies
 
 ### For PowerShell
+
 ```powershell
 # Minimize profile scripts
 $PSModuleAutoLoadingPreference = "None"
@@ -130,6 +138,7 @@ $PSModuleAutoLoadingPreference = "None"
 ```
 
 ### For Git Bash
+
 ```bash
 # Keep .bashrc minimal
 # Avoid network drives in PATH
@@ -138,6 +147,7 @@ $PSModuleAutoLoadingPreference = "None"
 ```
 
 ### WSL (Recommended)
+
 - **Best performance** for development workflows
 - **Additional overhead** only for cross-filesystem operations (avoid `/mnt/c/`)
 - **Use this** for all terminal/development work
@@ -145,21 +155,25 @@ $PSModuleAutoLoadingPreference = "None"
 ## Terminal Emulator Options
 
 ### Windows Terminal (Recommended)
+
 - Native integration, tabs, panes
 - Good bash support via profiles
 - Recent performance improvements
 
 ### WezTerm
+
 - Cross-platform, GPU-accelerated
 - Highly configurable
 - Built-in multiplexer
 
 ### Alacritty
+
 - Minimal, fast
 - GPU-accelerated
 - Simple configuration
 
 ### Mintty
+
 - **Default terminal for Git Bash**
 - Lightweight, fast terminal emulator
 - Originally for Cygwin/MSYS2, now used by Git for Windows
@@ -170,12 +184,14 @@ $PSModuleAutoLoadingPreference = "None"
 ## Benchmarks
 
 ### Real-world startup times (typical machine)
+
 - **PowerShell**: ~2.1s
 - **Git Bash**: ~1.3s (can spike to 8s+)
 - **WSL Bash**: ~1.6s
 - **Arch Linux Bash**: ~0.3s (for comparison)
 
 ### Process execution overhead
+
 - Git Bash: ~100ms for simple commands
 - PowerShell: ~50ms for simple cmdlets
 - WSL: ~30ms for native Linux commands
@@ -189,6 +205,7 @@ $PSModuleAutoLoadingPreference = "None"
 ## Configuration Tips
 
 ### Minimal PowerShell Profile
+
 ```powershell
 # Only load essential modules
 Import-Module Microsoft.PowerShell.Management
@@ -199,6 +216,7 @@ function prompt { "PS $PWD> " }
 ```
 
 ### Minimal Bash Profile
+
 ```bash
 # ~/.bashrc - keep it minimal
 export PS1='\w\$ '
@@ -206,6 +224,7 @@ export PS1='\w\$ '
 ```
 
 ### Windows Terminal Settings
+
 ```json
 {
   "profiles": {

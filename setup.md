@@ -6,26 +6,26 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
 
 - USB installer
   - Download Windows 11 ISO from Microsoft
-  - *Download ISO matching your target language (e.g., English US) to avoid slow language pack downloads during install*
+  - _Download ISO matching your target language (e.g., English US) to avoid slow language pack downloads during install_
   - Create bootable USB with Ventoy from Linux
 - Boot and install
   - Boot from USB stick with Ventoy + Windows ISO
   - Launch installer via Ventoy (Normal mode)
-  - *Pick English (US) for language/keyboard - UK is hard to remove later*
+  - _Pick English (US) for language/keyboard - UK is hard to remove later_
 - Disk setup
   - Delete all partitions on target disk, leave as unallocated space
   - Let Windows auto-create partitions
-  - *Note: Laptops shipped with Windows have OEM license that activates automatically*
+  - _Note: Laptops shipped with Windows have OEM license that activates automatically_
 - Network setup
   - At "Connect to network" screen: `Shift + F10`
   - Run: `OOBE\BYPASSNRO`
   - System reboots, then select "I don't have internet"
-  - *See [Troubleshooting](#no-wifi-networks-during-installation) if WiFi networks don't appear*
+  - _See [Troubleshooting](#no-wifi-networks-during-installation) if WiFi networks don't appear_
 - Local account creation
-  - *With BYPASSNRO, this goes straight to local user setup (no Microsoft sign-in prompt)*
-  - *Alternative (if you have network): `Shift + F10`, run `start ms-cxh:localonly` to skip Microsoft sign-in*
+  - _With BYPASSNRO, this goes straight to local user setup (no Microsoft sign-in prompt)_
+  - _Alternative (if you have network): `Shift + F10`, run `start ms-cxh:localonly` to skip Microsoft sign-in_
   - Create local user in the dialog that appears
-  - *Skip optional services and personalization prompts during setup*
+  - _Skip optional services and personalization prompts during setup_
 
 ## Post-install
 
@@ -34,7 +34,7 @@ The same content is found in https://github.com/hi-ogawa/windows-setup
 - Desktop settings
   - Display scaling
     - Settings → Display → Scale
-    - *Windows defaults to 150% on laptops - consider 100% if you prefer more screen space*
+    - _Windows defaults to 150% on laptops - consider 100% if you prefer more screen space_
   - Keyboard repeat
     - Settings → Accessibility → Keyboard
     - Adjust key repeat delay and rate
@@ -89,6 +89,7 @@ scoop install wezterm anki
 ### Dotfiles: WSL vs Windows
 
 The [sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and routes config appropriately:
+
 - Linux dotfiles → WSL home (`~/.bashrc`, `~/.gitconfig`, etc.)
 - VSCode settings → Windows host (`%APPDATA%/Code/User/...`)
 
@@ -108,6 +109,7 @@ The [sync script](https://github.com/hi-ogawa/dotfiles) detects WSL and routes c
 ## Drivers and OEM Software
 
 See [notes/drivers.md](notes/drivers.md) for details on:
+
 - Where drivers come from (Windows Update vs OEM vs vendor)
 - OEM support tools and workflows
 - Background software (what to keep/disable)

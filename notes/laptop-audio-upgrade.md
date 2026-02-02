@@ -5,14 +5,17 @@ Research for replacing Dell Inspiron 14 5425 (AMD Ryzen 5) with a laptop suitabl
 ## Use Case
 
 **Primary:**
+
 - Bass cover production (hobby) - see [media.md](media.md)
 - Software pedals: Ableton + Focusrite Scarlett, low-latency monitoring
 
 **Secondary:**
+
 - Side project development
 - Light web browsing
 
 **Not needed:**
+
 - Gaming
 - GPU-intensive workloads
 - High-end graphics
@@ -22,6 +25,7 @@ Research for replacing Dell Inspiron 14 5425 (AMD Ryzen 5) with a laptop suitabl
 ## Why Current Laptop Doesn't Work
 
 See [audio-latency.md](audio-latency.md) for full investigation. Summary:
+
 - Dell Inspiron (2022) + AMD Ryzen 5 has audio glitches at 128-sample buffer
 - LatencyMon shows acceptable DPC latency, but glitches persist
 - Same setup worked fine on older Intel Dell laptop
@@ -30,6 +34,7 @@ See [audio-latency.md](audio-latency.md) for full investigation. Summary:
 ## What Makes a Laptop Good for Audio
 
 ### DPC Latency
+
 The most critical factor for real-time audio. DPC (Deferred Procedure Call) latency determines if the system can process audio buffers without dropouts.
 
 - **< 500µs** - Excellent, no issues at any buffer size
@@ -38,23 +43,25 @@ The most critical factor for real-time audio. DPC (Deferred Procedure Call) late
 
 ### Key Specs
 
-| Spec | Recommendation | Notes |
-|------|----------------|-------|
-| CPU | Intel preferred for low-latency | AMD catches up at higher buffer sizes but less efficient at 64-128 samples |
-| GPU | Intel integrated or AMD discrete | NVIDIA drivers known to cause DPC issues |
-| RAM | 16GB minimum | 32GB for large projects |
-| Storage | NVMe SSD | For sample streaming |
-| Ports | Thunderbolt/USB-C | Low-latency audio interface connection |
-| Thermals | Quiet under load | Fan noise during recording is a dealbreaker |
+| Spec     | Recommendation                   | Notes                                                                      |
+| -------- | -------------------------------- | -------------------------------------------------------------------------- |
+| CPU      | Intel preferred for low-latency  | AMD catches up at higher buffer sizes but less efficient at 64-128 samples |
+| GPU      | Intel integrated or AMD discrete | NVIDIA drivers known to cause DPC issues                                   |
+| RAM      | 16GB minimum                     | 32GB for large projects                                                    |
+| Storage  | NVMe SSD                         | For sample streaming                                                       |
+| Ports    | Thunderbolt/USB-C                | Low-latency audio interface connection                                     |
+| Thermals | Quiet under load                 | Fan noise during recording is a dealbreaker                                |
 
 ### Intel vs AMD for Audio
 
 **Intel advantages:**
+
 - More efficient at low buffer sizes (64-128 samples)
 - Better tested USB/audio stack
 - Historically fewer DPC latency issues
 
 **AMD considerations:**
+
 - Performs well at 256+ buffer sizes
 - Newer Ryzen generations improved significantly
 - Mobile Ryzen (laptops) more problematic than desktop
@@ -65,6 +72,7 @@ The most critical factor for real-time audio. DPC (Deferred Procedure Call) late
 ### NVIDIA GPU Warning
 
 NVIDIA GPU drivers (`nvlddmkm.sys`) are notorious for causing DPC latency issues. Options:
+
 1. Choose laptop with Intel integrated or AMD discrete GPU
 2. If NVIDIA, may need to disable GPU or use minimal driver install
 
@@ -75,11 +83,13 @@ NVIDIA GPU drivers (`nvlddmkm.sys`) are notorious for causing DPC latency issues
 Keeps your current workflow (Ableton, Windows setup documented in this repo).
 
 **Pros:**
+
 - Familiar ecosystem
 - Ableton + VST plugins work
 - Can migrate your existing Windows setup
 
 **Cons:**
+
 - DPC latency varies by laptop model
 - Need to research specific models carefully
 - "Modern Standby" on newer laptops complicates audio optimization
@@ -92,6 +102,7 @@ Documented for completeness, but **not a viable option** - staying in Windows/Li
 <summary>Details (for reference)</summary>
 
 **Pros:**
+
 - Core Audio built into OS - ultra-low latency out of the box
 - No ASIO driver complexity
 - M-series chips extremely efficient (30% CPU with full session)
@@ -99,12 +110,14 @@ Documented for completeness, but **not a viable option** - staying in Windows/Li
 - "It just works" reputation for audio
 
 **Cons:**
+
 - Different OS, learning curve
 - Some Windows-only VST plugins won't work
 - Higher cost
 - Locked into Apple ecosystem
 
 **Latency comparison:**
+
 - MacBook M-series + Scarlett: ~16ms round-trip at 128 samples (comparable to Windows)
 - Main advantage is reliability, not raw latency numbers
 
@@ -113,20 +126,24 @@ Documented for completeness, but **not a viable option** - staying in Windows/Li
 ### Option 3: Specialist Audio Laptop (XMG)
 
 XMG (German company) sells laptops specifically optimized for audio:
+
 - DPC latency tested and guaranteed < 1ms out of the box
 - Bloatware-free Windows install
 - BIOS and drivers tuned for audio
 
 **Pricing:**
+
 - XMG DJ 15 base: ~€1,100-1,220
 - XMG DJ 15 max: ~€1,500
 - (Comparable to MacBook Air M4)
 
 **Pros:**
+
 - Purpose-built, guaranteed low latency
 - No configuration/troubleshooting needed
 
 **Cons:**
+
 - **Dated hardware** - XMG DJ 15 uses Intel 10th gen (2020), no updates since
 - Only available in Europe (shipping to Japan?)
 - Paying premium for 5-year-old specs
@@ -137,6 +154,7 @@ XMG (German company) sells laptops specifically optimized for audio:
 ## Specific Recommendations
 
 Given the lightweight use case (no gaming/GPU needs), prioritize:
+
 - Intel CPU with integrated graphics (Iris Xe or UHD)
 - Portable form factor (13-15")
 - Good keyboard for dev work
@@ -144,20 +162,21 @@ Given the lightweight use case (no gaming/GPU needs), prioritize:
 
 ### Recommended Categories
 
-| Category | Examples | Notes |
-|----------|----------|-------|
+| Category           | Examples                    | Notes                                                   |
+| ------------------ | --------------------------- | ------------------------------------------------------- |
 | Business ultrabook | ThinkPad T series, X series | Good keyboards, Intel options, check specific model DPC |
-| Used workstation | ThinkPad P52 | Known good DPC, overkill specs but reliable |
+| Used workstation   | ThinkPad P52                | Known good DPC, overkill specs but reliable             |
 
 ### Models to Research
 
-| Model | Why | Check |
-|-------|-----|-------|
-| ThinkPad T14s (Intel) | Portable, business-class | NotebookCheck DPC, avoid AMD variant |
-| ThinkPad X1 Carbon (Gen 9+) | Ultralight, Intel | Verify DPC on specific gen |
-| Used ThinkPad P52 | Known good, budget option | Availability |
+| Model                       | Why                       | Check                                |
+| --------------------------- | ------------------------- | ------------------------------------ |
+| ThinkPad T14s (Intel)       | Portable, business-class  | NotebookCheck DPC, avoid AMD variant |
+| ThinkPad X1 Carbon (Gen 9+) | Ultralight, Intel         | Verify DPC on specific gen           |
+| Used ThinkPad P52           | Known good, budget option | Availability                         |
 
 **Avoid:**
+
 - ThinkPad P53, X1 Extreme Gen 2 (known DPC issues)
 - Dell XPS series (ACPI.sys issues)
 - Any AMD mobile CPU (based on current experience)
@@ -199,23 +218,28 @@ Is low-latency software monitoring the primary goal?
 ## Sources
 
 ### General Recommendations
+
 - [Best Laptops for Music Production 2025 - Wavecolab](https://www.wavecolab.com/articles/best-windows-laptops-audio-production-2025)
 - [Best Laptops for Music Production - MusicRadar](https://www.musicradar.com/news/best-laptops-for-music-production)
 - [RTINGS Best Laptops for Music Production](https://www.rtings.com/laptop/reviews/best/by-usage/music-production)
 
 ### DPC Latency Research
+
 - [NotebookCheck DPC Latency Ranking](https://www.notebookcheck.net/DPC-Latency-Ranking-Which-laptops-and-Windows-tablets-offer-the-lowest-latency.504376.0.html)
 - [XMG Audio Laptops Deep Dive](https://www.xmg.gg/en/news-deep-dive-audio-laptops-xmg-dpc-latencies/)
 - [Gearspace: Building PC for Audio - GPU AMD vs NVIDIA](https://gearspace.com/board/music-computers/1443533-building-pc-audio-gpu-amd-nvidia-better-dpc-latency-2025-what-mobo.html)
 
 ### Intel vs AMD
+
 - [KVR Audio: Ryzen 3900X latency and audio interface](https://www.kvraudio.com/forum/viewtopic.php?t=533086)
 - [Gearspace: DPC latency problems](https://gearspace.com/board/music-computers/1403897-dpc-latency-problems.html)
 
 ### ThinkPad Experiences
+
 - [Elektronauts: Lenovo ThinkPad for productions](https://www.elektronauts.com/t/lenovo-thinkpad-notebook-for-productions/104228?page=3)
 - [Lenovo Forums: P52 for Music Production](https://forums.lenovo.com/t5/ThinkPad-P-and-W-Series-Mobile/P52-for-Music-Production-DPC-Latency/td-p/4226922)
 
 ### Mac/Focusrite
+
 - [Focusrite: Improving latency on Mac](https://support.focusrite.com/hc/en-gb/articles/208736249-Improving-the-latency-of-your-Focusrite-interface-on-Mac)
 - [Focusrite macOS Compatibility](https://support.focusrite.com/hc/en-gb/articles/12033372452754-Focusrite-Compatibility-on-macOS)

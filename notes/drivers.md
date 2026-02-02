@@ -10,26 +10,29 @@ Coming from Linux, the Windows driver ecosystem works quite differently. This do
 
 ## Where Drivers Come From
 
-| Source | Freshness | Reliability | Notes |
-|--------|-----------|-------------|-------|
-| Windows Update | Old (months/years behind) | High | WHQL certified, conservative |
-| Windows Update (Optional) | Medium | High | Check Settings → Windows Update → Advanced → Optional updates |
-| OEM website (Dell, Lenovo) | Medium | High | Customized for your specific model |
-| Vendor website (Realtek, NVIDIA, AMD) | Latest | Medium | Generic, may miss OEM tweaks |
-| Device Manager "Search automatically" | Old | High | Just searches Windows Update |
+| Source                                | Freshness                 | Reliability | Notes                                                         |
+| ------------------------------------- | ------------------------- | ----------- | ------------------------------------------------------------- |
+| Windows Update                        | Old (months/years behind) | High        | WHQL certified, conservative                                  |
+| Windows Update (Optional)             | Medium                    | High        | Check Settings → Windows Update → Advanced → Optional updates |
+| OEM website (Dell, Lenovo)            | Medium                    | High        | Customized for your specific model                            |
+| Vendor website (Realtek, NVIDIA, AMD) | Latest                    | Medium      | Generic, may miss OEM tweaks                                  |
+| Device Manager "Search automatically" | Old                       | High        | Just searches Windows Update                                  |
 
 **Best practice:** Use OEM drivers when available, fall back to vendor drivers for latest features.
 
 ## Checking Installed Driver Versions
 
 **Device Manager:**
+
 - Win+X → Device Manager
 - Right-click device → Properties → Driver tab → "Driver Version"
 
 **BIOS version:**
+
 - Run `msinfo32` → "BIOS Version/Date"
 
 **Or via PowerShell:**
+
 ```powershell
 # List all drivers with versions
 Get-WmiObject Win32_PnPSignedDriver | Select DeviceName, DriverVersion | Sort DeviceName
@@ -40,11 +43,13 @@ Get-WmiObject Win32_PnPSignedDriver | Select DeviceName, DriverVersion | Sort De
 Dell support page: `https://www.dell.com/support/home` (auto-detects by Service Tag)
 
 **Manual approach:**
+
 1. Go to Drivers & Downloads for your model
 2. Compare versions against what's installed
 3. Download and install manually
 
 **SupportAssist app:**
+
 - Scans system and shows only updates you actually need
 - Can auto-install updates
 - Downsides: runs in background, has had security vulnerabilities, nagware
@@ -55,16 +60,17 @@ Dell support page: `https://www.dell.com/support/home` (auto-detects by Service 
 
 For a typical laptop, prioritize these:
 
-| Driver | Impact |
-|--------|--------|
-| BIOS | Power management, hardware fixes, security |
-| Chipset | System stability, power states |
-| Audio (Realtek) | Sound quality, latency |
-| Graphics (AMD/Intel/NVIDIA) | Display, performance |
-| Wi-Fi/Bluetooth | Connectivity stability |
-| Storage firmware | SSD performance, reliability |
+| Driver                      | Impact                                     |
+| --------------------------- | ------------------------------------------ |
+| BIOS                        | Power management, hardware fixes, security |
+| Chipset                     | System stability, power states             |
+| Audio (Realtek)             | Sound quality, latency                     |
+| Graphics (AMD/Intel/NVIDIA) | Display, performance                       |
+| Wi-Fi/Bluetooth             | Connectivity stability                     |
+| Storage firmware            | SSD performance, reliability               |
 
 Skip these (bloatware):
+
 - Dell Digital Delivery
 - Dell SmartByte (network "optimization")
 - Waves MaxxAudio Pro (audio effects, can cause issues)
@@ -76,6 +82,7 @@ AMD laptops come with several components:
 **AMD Chipset Driver** - Essential, manages power states and CPU features
 
 **AMD Radeon Software (Adrenalin)** - Optional GUI app for:
+
 - GPU settings, color profiles
 - Game optimization
 - Recording/streaming (ReLive)
@@ -116,6 +123,7 @@ Audio glitches (crackling, dropouts) are common on Windows. Causes:
 ## Windows Update and Drivers
 
 Windows Update includes drivers but:
+
 - Only WHQL-certified "stable" versions (often outdated)
 - May install generic drivers instead of OEM-specific
 - Some updates are under "Optional updates" (not auto-installed)
@@ -126,6 +134,7 @@ Settings → Windows Update → Advanced options → Optional updates → Driver
 ## Email Notifications for Driver Updates
 
 Dell (and other OEMs) offer email subscriptions for new driver releases:
+
 - Dell: On support page → "ドライバー サブスクリプション" / "Driver subscription"
 
 This avoids needing to check manually or run SupportAssist.

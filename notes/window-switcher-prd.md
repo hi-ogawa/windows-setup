@@ -28,6 +28,7 @@ Single hotkey to unified search: open windows, apps, and system actions.
 ### Windows API
 
 **Open Windows**:
+
 ```
 EnumWindows          - Enumerate all top-level windows
 GetWindowText        - Get window title
@@ -36,6 +37,7 @@ SetForegroundWindow  - Switch to selected window
 ```
 
 **Installed Apps**:
+
 ```
 // Start Menu shortcuts
 %ProgramData%\Microsoft\Windows\Start Menu\Programs\
@@ -46,6 +48,7 @@ SetForegroundWindow  - Switch to selected window
 ```
 
 **System Actions**:
+
 ```
 ExitWindowsEx(EWX_SHUTDOWN)  - Shutdown
 ExitWindowsEx(EWX_REBOOT)    - Restart
@@ -86,12 +89,12 @@ Alternatively, use low-level keyboard hook for Win key detection.
 
 ## Tech Stack Options
 
-| Option | Pros | Cons |
-|--------|------|------|
-| C# + WPF | Rich UI, easy dev | Larger binary |
-| C# + WinForms | Simple, small | Basic UI |
-| C/C++ + Win32 | Tiny binary | More code |
-| Rust + egui | Modern, safe, single exe | Learning curve |
+| Option        | Pros                     | Cons           |
+| ------------- | ------------------------ | -------------- |
+| C# + WPF      | Rich UI, easy dev        | Larger binary  |
+| C# + WinForms | Simple, small            | Basic UI       |
+| C/C++ + Win32 | Tiny binary              | More code      |
+| Rust + egui   | Modern, safe, single exe | Learning curve |
 
 **Recommendation**: C# + WPF for quick development, or Rust for minimal binary.
 
